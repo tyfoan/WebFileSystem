@@ -9,53 +9,15 @@
             <p>Current path: {{ currentPath }}</p>
         </div>
 
-        <a href="#" ng-click="backToNode()">..</a>
-        <div id="display" ng-repeat="item in result">
-            <a href="#" ng-click="goToNode(item.FullPath)">{{ item.LastSegment }} </a><br />
+        <a href="#" ng-click="getBack()">..</a>
+
+        <div id="display" ng-repeat="item in result.dirs">
+            <a href="#" ng-click="getPath(item.FullPath)">{{ item.FileName }} </a><br />
+        </div>
+
+        <div ng-repeat="file in result.files">
+            {{ file }} <br />
         </div>
     </div>
 </div>
 
-
-@*@section scripts
-{
-    <script type="text/javascript">
-        $(document).ready(function () {
-        //    GetAllDirs();
-        });
-
-
-        // Получение всех логических дисков по ajax-запросу
-        function GetAllDirs() {
-            $.ajax({
-                url: '/api/values',
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    WriteResponse(data);
-                },
-                error: function (x, y, z) {
-                    alert(x + '\n' + y + '\n' + z);
-                }
-            });
-        }
-        //вывод полученных данных на экран
-        function WriteResponse(items) {
-            var result = "<a href='#'>" + item + "</a> <br />";
-            $.each(items, function (index, item) {
-                result += "<a href='#'>" + item + "</a> <br />";
-            });
-
-            $("#display").html(result);
-        }
-
-        function ToNextNode() {
-
-        }
-
-        function Back() {
-
-        }
-
-    </script>
-}*@
