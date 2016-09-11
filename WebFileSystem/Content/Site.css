@@ -34,7 +34,7 @@ textarea {
 .container{
     max-width: 980px;
     background-color: #f7f7f7;
-    /*height: 600px;*/
+    min-height: 600px;
 }
 
 #current-dirrectory{
@@ -47,6 +47,7 @@ textarea {
 
 #section{
     padding: 20px;
-    height:500px;
+    margin-bottom: 50px;
     border: solid 1px #f4f4f4;
+    
 }

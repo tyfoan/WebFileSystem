@@ -67,6 +67,14 @@ namespace WebFileSystem.Controllers
             {
                 return false;
             }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
             if (accessControlList == null)
                 return false;
             var accessRules = accessControlList.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
@@ -147,8 +155,8 @@ namespace WebFileSystem.Controllers
         {
             var dirs = new List<DirToView>();
 
-            IList<string> directories;
-            IList<string> files;
+            List<string> directories;
+            List<string> files;
 
             long less10Mb = 0, less50Mb = 0, more100Mb = 0;
 
@@ -160,12 +168,11 @@ namespace WebFileSystem.Controllers
             }
             else
             {
-                directories = Directory.GetDirectories(path);
-                files = Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly);
-                directories.Concat(files);
+                directories = Directory.GetDirectories(path).Where(f => (new FileInfo(f).Attributes & FileAttributes.Hidden & FileAttributes.System) == 0).ToList();
+                files = Directory.GetFiles(path, "*.*", SearchOption.TopDirectoryOnly).Where(f => (new FileInfo(f).Attributes & FileAttributes.Hidden & FileAttributes.System) == 0).ToList();
+                directories.AddRange(files);
             }
 
-            
             foreach (var directory in directories)
             {
                 if (!CanRead(directory))
@@ -174,7 +181,12 @@ namespace WebFileSystem.Controllers
                 
                 try
                 {
-                    var items = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories);
+                    //FileAttributes attr;
+                    //attr = File.GetAttributes(directory);
+                    //if (!attr.HasFlag(FileAttributes.Directory))
+                    //{
+                    var items = Directory.GetFiles(directory, "*.*", SearchOption.AllDirectories).Where(f => (new FileInfo(f).Attributes & FileAttributes.Hidden & FileAttributes.System) == 0);
+                    //}
                     FileInfo info;
                     foreach (var file in items)
                     {
@@ -196,11 +208,12 @@ namespace WebFileSystem.Controllers
                             more100Mb += 1;
                     }
                 }
-                catch (UnauthorizedAccessException)
+                catch (Exception)
                 {
 
                 }
 
+               
 
 
                 dirs.Add(new DirToView()
