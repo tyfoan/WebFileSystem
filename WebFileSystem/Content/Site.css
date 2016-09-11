@@ -1,6 +1,6 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+    padding: 20px 0;
+    background: #ffffff;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -14,4 +14,39 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+
+.table{
+    text-align:center;
+    font-size: 16px;
+    margin-top: 40px;
+}
+
+.table .table-bordered th{
+    background:#b3b3b3;
+    border:none;
+    text-align:center;
+    color:white;
+}
+
+
+.container{
+    max-width: 980px;
+    background-color: #f7f7f7;
+    /*height: 600px;*/
+}
+
+#current-dirrectory{
+    margin-top: 50px;
+}
+
+#current-dirrectory span{
+    font-weight:700;
+}
+
+#section{
+    padding: 20px;
+    height:500px;
+    border: solid 1px #f4f4f4;
 }

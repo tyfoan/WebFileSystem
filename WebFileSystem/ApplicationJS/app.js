@@ -28,10 +28,13 @@ app.controller("HomeController", ["$scope", "$http", function ($scope, $http) {
 
         $http.get("/api/values?path=" + encodeURIComponent(path))
             .success(function (data) {
-                $scope.result = data;
+                $scope.result = data.dirs;
+                $scope.less10Mb = data.less10Mb;
+                $scope.less50Mb = data.less50Mb;
+                $scope.more100Mb = data.more100Mb;
                 console.log(data);
             }).error(function () {
-                alert('oops something went wrong');
+                alert('oops something went wrong or you have no access');
             });
     };
 
