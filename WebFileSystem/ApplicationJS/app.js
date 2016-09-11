@@ -34,7 +34,7 @@ app.controller("HomeController", ["$scope", "$http", function ($scope, $http) {
                 $scope.more100Mb = data.more100Mb;
                 console.log(data);
             }).error(function () {
-                alert('oops something went wrong or you have no access');
+                alert('oops something went wrong...');
             });
     };
 
